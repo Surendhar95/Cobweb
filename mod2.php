@@ -20,24 +20,26 @@
 
 try{
 include("connect.php");
-
+include('lib/password.php');
 $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 session_start();
-if(!isset($_SESSION["user_id"]))
+$_SESSION['g_id'] = '111';
+
+if(!isset($_SESSION["g_id"]))
 {
     echo "session expired";
     header("Location:http://www.knosys.in");
 }
 //include(mod1.php);
-$userid=$_SESSION["user_id"];
-
+$userid=$_SESSION["g_id"];
+$userid='111';
 $stmt=$db->prepare("SELECT * FROM board WHERE UserId=?");
 $stmt->bindParam(1,$userid,PDO::PARAM_STR,5);
 $stmt->execute();
 
 
 $ansNo=$stmt->fetchColumn(2);       //getting  no of questions solved by user
-$ansNo++;   
+$ansNo++;  
 
 $stmt=$db->prepare("SELECT * FROM questions WHERE QNo=?");
 $stmt->bindParam(1,$ansNo,PDO::PARAM_STR,5);
@@ -66,8 +68,12 @@ $img3=$path.$img3;
 
 //echo $count;
 $SALT="*k^@$%&#!$";
-
-
+function encrypt($data,$key){
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_CBC);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $crypttext = mcrypt_encrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_CBC, $iv);
+    return bin2hex($iv . $crypttext);
+}
 $encrypted_ansNo=encrypt($ansNo,$SALT);
 //echo $encrypted_ansNo;
 $_SESSION['ans_no']=$encrypted_ansNo;
@@ -208,7 +214,7 @@ echo "Level:" .$no;
 }
 ?></h4>
 <h3 style="color:white"><?php echo $quest ?></h3>
-<div style='position:absolute;bottom:10px;left:650px'><img src='images/lg-lifes-good-logo.jpg' width='200px' height='80px'></div>
+
 <?php
 if($no != 29){?>
 <h3 style="text-align:center;color:black"><b>Answer:</b></h3>
@@ -223,6 +229,6 @@ if($no != 29){?>
 </div>
 </div>
 </div>
-<?php header("Location:index.php"); ?>
+
 </body>
 </html>

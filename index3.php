@@ -15,8 +15,9 @@ $_SESSION['user_name']=$_POST['username'];
 	header("Location:http://www.knosys.in");
 }
 else{ 
-$phone=$_SESSION['knosys'];
+$phone=1234567889;
 $userid=$_SESSION['user_id'];
+$userid="111";
 $username=$_SESSION['user_name'];
 $stmt=$db->prepare("SELECT * FROM profile WHERE UserId=:userid");
 $stmt->bindParam(':userid',$userid,PDO::PARAM_STR);

@@ -1,48 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head> 
-    <title>CobWeb</title>
-<meta charset="utf-8"/>
-<link rel="icon" href="images/favicon.png" type="image/gif" sizes="16x16">
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<?php
+try{
+	
+include("connect.php");
+//$db=new PDO("mysql:host=$host;dbname=$dbase",$username,$password);
+$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+session_start();
+// $_SESSION['knosys']=$_POST['knosys'];
+// $_SESSION['g_id']=$_POST['g_id'];
+// $_SESSION['user_name']=$_POST['username'];
+$_SESSION['g_id'] = '111';
+$_SESSION['user_name'] = 'xxx';
+	if((!isset($_SESSION['g_id'])))
+{
+	echo "session expired";
+	header("Location:http://www.gyanith.org");
+}
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<script src=""></script>
-<meta http-equiv="cache-control" content="max-age=0" />
-<meta http-equiv="cache-control" content="no-cache" />
-<meta http-equiv="expires" content="0" />
-<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-<meta http-equiv="pragma" content="no-cache" />
-</head>
+else{ 
+$userid=$_SESSION['g_id'];
+$username=$_SESSION['user_name'];
+$stmt=$db->prepare("SELECT * FROM profile WHERE UserId=:userid");
+$stmt->bindParam(':userid',$userid,PDO::PARAM_STR);
+$stmt->execute();
+$result=$stmt->fetchColumn();
+$stmt1=$db->prepare("SELECT * FROM disqualify WHERE UserId=:userid");
+$stmt1->bindParam(':userid',$userid,PDO::PARAM_STR);
+$stmt1->execute();
+$result1=$stmt1->fetchColumn(0);
 
-<body  background='images/bg.gif'  style="overflow:hidden;background-repeat: no-repeat;background-size:cover;background-attachment:fixed; " >
-<div class="container-fluid">
-    
-<div class="row" style="top:0px">
-<div class="col-sm-12 col-md-12 col-lg-12">
-<img src="header-130.png" width=100% >
-</div>
-</div>
-<center>
-<img src='images/name.png' style='width:200px;height:80px;'>
-</center>
+if($result!=NULL && $result1==NULL)
+{
+	
+	header("Location:mod2.php");
+}
+if($result==NULL)
+{
+	$db->exec("INSERT INTO profile(UserId, Name,Starttime) VALUES ('$userid','$username',CURRENT_TIMESTAMP)");
+	$db->exec("INSERT INTO board(UserId, Name, AnsNo, Time, Attempts) VALUES ('$userid','$username','0',CURRENT_TIMESTAMP,'0')");
+	header("Location:mod2.php");
+}
+if($result1!=NULL){
 
-<?php 
-    
-    header("Location:http://www.knosys.in/");
-echo"<div class='row' >";
-echo "<div class='' col-sm-12 col-md-12'>" ;
-
-//<!--<div style="text-align: center">-->
-echo"<center>";
-
-echo"<h3 style='color:black'>The Event is over and results will be announced soon in Facebook forum.</h3> ";
-echo"</center>";
-
-echo"</div>";
-header("Location:http://www.knosys.in/");
-    }?>
-
-</div>
-</body>
-</html>
+	header("Location:disqualify.php");
+}
+}
+}
+catch(PDOException $e)
+	{
+		$e->getMeassage();
+	}
+		?>

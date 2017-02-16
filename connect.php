@@ -1,16 +1,15 @@
+
+
 <?php
-/*$host='cobweb-knosys.rhcloud.com';
-$dbase='TreasureHunt';
-$dbase1='login';
+try{
+$host='mysql:dbname=treasurehunt;host=localhost;';
 $username='root';
-$password='';*/
-define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST'));
-define('DB_PORT',getenv('OPENSHIFT_MYSQL_DB_PORT')); 
-define('DB_USER',getenv('OPENSHIFT_MYSQL_DB_USERNAME'));
-define('DB_PASS',getenv('OPENSHIFT_MYSQL_DB_PASSWORD'));
-define('DB_NAME',getenv('OPENSHIFT_GEAR_NAME'));
+$password='';
+$db=new PDO($host,$username,$password);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//echo 'connected succes';
+}
 
-$dsn = 'mysql:dbname=treasurehunt;host='.DB_HOST.';port='.DB_PORT;
-$db = new PDO($dsn, DB_USER, DB_PASS);
-
+catch(PDOException $e)
+{echo 'connected fail'.$e;}
 ?>

@@ -7,7 +7,7 @@ include('lib/password.php');
 //$con=new PDO("mysql:host=$host;dbname=$dbase1",$username,$password);
 $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 session_start();
-$userid=$_SESSION['user_id'];
+$userid=$_SESSION['g_id'];
 if(isset($_REQUEST["submit"]))
 {
 	if($_REQUEST['ans']!=null)
@@ -15,17 +15,18 @@ if(isset($_REQUEST["submit"]))
 		echo "nice<br/>";
 		$ans_no=$_SESSION['ans_no'];
 		$SALT="*k^@$%&#!$";
-		function decrypt($encrypted_string, $encryption_key) {
-    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    $decrypted_ansNo = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
-    return $decrypted_ansNo;
-	}
+		function decrypt($data,$key){
+    $iv=pack("H*" , substr($data,0,16));
+    $x =pack("H*" , substr($data,16)); 
+    $res = mcrypt_decrypt(MCRYPT_BLOWFISH, $key, $x , MCRYPT_MODE_CBC, $iv);
+    return $res;
+}
+
 	$ans_no=decrypt($ans_no,$SALT);
 		//echo $ans_no;
 		$crypt;
 		
-		$ans1=$_SESSION['knosys'];
+		// $ans1=$_SESSION['knosys'];
 		
 		$ans_submitted=$_REQUEST['ans'];
 		
@@ -59,7 +60,7 @@ if(isset($_REQUEST["submit"]))
 	}	
 		
 		$stmt=$db->prepare("SELECT * FROM board WHERE UserId=?");
-		$stmt->bindParam(1,$_SESSION['user_id'],PDO::PARAM_STR,10);
+		$stmt->bindParam(1,$_SESSION['g_id'],PDO::PARAM_STR,10);
 		$stmt->execute();		
 		$attempts=$stmt->fetchColumn(4);
 		$attempts++;
