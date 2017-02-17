@@ -11,10 +11,12 @@
 <body  background='images/bg1.png'  style="background-repeat: no-repeat;background-size:cover; " >
 	<div class='container-fluid'>
 		<div class="row" style="top:0px">
-<div class="col-sm-12 col-md-12 col-lg-12">
-<img src="header-130.png" width=100% >
+<div class="col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+<img src="images/logo.svg" >
 </div>
 </div>
+
+
 <h2 style="text-align:center;color:white">Leaderboard<h2>
 	
 	<div class='row'>
@@ -46,7 +48,7 @@ $stmt1=$db->prepare("SELECT * FROM board WHERE UserId=? ");
 $stmt1->bindParam(1,$userid,PDO::PARAM_STR,5);
 $stmt1->execute();
 session_start();
-$userid=$_SESSION['user_id'];
+$userid=$_SESSION['g_id'];
 //echo $result1['UserId'];
 $i=0;                    
 $j;

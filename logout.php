@@ -2,5 +2,5 @@
 session_start();
 session_destroy();
 
-header("Location:http://www.knosys.in");
+header("Location:http://www.gyanith.org");
 ?>

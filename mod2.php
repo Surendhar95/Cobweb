@@ -15,6 +15,13 @@
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 <meta http-equiv="pragma" content="no-cache" />
 </head>
+<style>
+.name {
+    text-align: center;
+    position: relative;
+    top:-60px;
+}
+</style>
 
 <?php
 
@@ -92,13 +99,13 @@ catch(PDOException $e)
 <div class="container-fluid">
     
 <div class="row" style="top:0px">
-<div class="col-sm-12 col-md-12 col-lg-12">
-<img src="header-130.png" width=100% >
+<div class="col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+<img src="images/logo.svg" >
 </div>
 </div>
-<center>
-<img src='images/name.png' style='width:200px;height:80px;'>
-</center>
+<div class="name">
+<img src='images/name.png' style='width:220px;height:80px;'>
+</div>
 
 <?php 
     if($imgno==1)
@@ -109,7 +116,7 @@ echo "<div class='' col-sm-12 col-md-12'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src=$img1 style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src=$img1 style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -122,7 +129,7 @@ echo "<div class=' col-sm-6 col-md-6'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src=$img1 style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src=$img1 style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -132,7 +139,7 @@ echo "<div class=' col-sm-6 col-md-6'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src=$img2 style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src=$img2 style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -145,7 +152,7 @@ echo "<div class=' col-sm-4 col-md-4'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src=$img1 style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src=$img1 style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -155,7 +162,7 @@ echo "<div class='col-sm-4 col-md-4'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src='$img2' style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src='$img2' style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -165,7 +172,7 @@ echo "<div class='col-sm-4 col-md-4'>" ;
 //<!--<div style="text-align: center">-->
 echo"<center>";
 
-echo"<img class='img-thumbnail' src='$img3' style='width:280px ;height:280px' /> ";
+echo"<img class='img-thumbnail' src='$img3' style='width:220px ;height:220px' /> ";
 echo"</center>";
 
 echo"</div>";
@@ -194,7 +201,7 @@ echo"</div>";
 <!-- </div> -->
 
 </div>
-<div style="position:absolute;top:80px;left:200px;"><font size='2px' color='white'><b>Hi <?php echo $_SESSION['user_name'] ?></b></font></div>
+<div style="position:absolute;top:80px;left:220px;"><font size='5px' color='white'><b>Hi <?php echo $_SESSION['user_name'] ?></b></font></div>
 <center>
 <div class="row"> 
 <div class="col-sm-4 ">
@@ -219,7 +226,7 @@ echo "Level:" .$no;
 if($no != 29){?>
 <h3 style="text-align:center;color:black"><b>Answer:</b></h3>
 <form  id ="answer" name="answer" action="mod3.php" method="post" autocomplete="off" align="center" >   
-<input style=" font-family:oswald;height:33px;font-size:16px" type="text" pattern="[a-z]*{10}" title="No special characters are allowed" placeholder="All text in lowercases only" required style="width:280px ;height:30px" name="ans"></input>
+<input style=" font-family:oswald;height:33px;font-size:16px" type="text" pattern="[a-z]*{10}" title="No special characters are allowed" placeholder="All text in lowercases only" required style="width:220px ;height:30px" name="ans"></input>
 <button style="background-color:#5C7079;cursor:hand" type="submit" class="btn btn-primardy" name="submit"><b><font color="black" size="">Submit</font></b></button>
 </form>
 <?php } ?>
