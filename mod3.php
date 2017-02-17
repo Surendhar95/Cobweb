@@ -53,7 +53,7 @@ if(isset($_REQUEST["submit"]))
 		$stmt1=$db->prepare("SELECT * FROM answers WHERE No=".$ans_no);
 		
 		//$stmt1->bindParam(1,$ans_no,PDO::PARAM_INT);
-		$stmt1->execute();
+		$stmt1->execute();	
 		$check_ans=$stmt1->fetchColumn(1);
 		//}
 		$crypt=password_verify($ans_submitted,$check_ans);
